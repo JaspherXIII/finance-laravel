@@ -27,48 +27,10 @@
                               </a>
 
                           </li>
-                          <li class="nav-item nav-icon dropdown">
-                              <a href="#" class="search-toggle dropdown-toggle" id="dropdownMenuButton"
-                                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                      stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell">
-                                      <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                                      <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                                  </svg>
-                                  <span class="bg-primary "></span>
-                              </a>
-                              <div class="iq-sub-dropdown dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                  <div class="card shadow-none m-0">
-                                      <div class="card-body p-0 ">
-                                          <div class="cust-title p-3">
-                                              <div class="d-flex align-items-center justify-content-between">
-                                                  <h5 class="mb-0">Notifications</h5>
-                                                  <a class="badge badge-primary badge-card" href="#">3</a>
-                                              </div>
-                                          </div>
-                                          <div class="px-3 pt-0 pb-0 sub-card">
-                                              <a href="#" class="iq-sub-card">
-                                                  <div class="media align-items-center cust-card py-3 border-bottom">
-                                                      <div class="media-body ml-3">
-                                                          <div
-                                                              class="d-flex align-items-center justify-content-between">
-                                                              <h6 class="mb-0">Shipment Recieved</h6>
-                                                              <small class="text-dark"><b>12 : 47 pm</b></small>
-                                                          </div>
-                                                          <small class="mb-0">Nestle Supplier</small>
-                                                      </div>
-                                                  </div>
-                                              </a>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                          </li>
                           <li class="nav-item nav-icon dropdown caption-content">
                               <a href="#" class="search-toggle dropdown-toggle" id="dropdownMenuButton4"
                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  <img src="{{ Auth::user()->picture }}" class="img-fluid rounded user_picture"
+                                  <img src="/logistic-assets/images/user/1.png" class="img-fluid rounded user_picture"
                                       alt="user">
                               </a>
                               <div class="iq-sub-dropdown dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -77,14 +39,15 @@
                                           <div class="media-body profile-detail text-center">
                                               <img src="/logistic-assets/images/page-img/profile-bg.jpg"
                                                   alt="profile-bg" class="rounded-top img-fluid mb-4">
-                                              <img src="{{ Auth::user()->picture }}" alt="profile-img"
+                                              <img src="/logistic-assets/images/user/1.png" alt="profile-img"
                                                   class="rounded profile-img img-fluid avatar-70 user_picture">
                                           </div>
                                           <div class="p-3">
                                               <h5 class="mb-1 user_email">{{ Auth::user()->email }}</h5>
                                               <div class="d-flex align-items-center justify-content-center mt-3">
                                                   @if (auth()->user()->role == 1)
-                                                      <a href="/admin/profile" class="btn border mr-2">Profile</a>
+                                                      <a href="javascript:void(0)" id="changePassword"
+                                                          class="btn border mr-2">Change Password</a>
                                                   @endif
                                                   <a class="nav-link" class="btn border" href="{{ route('logout') }}"
                                                       onclick="event.preventDefault();
@@ -123,3 +86,77 @@
           </nav>
       </div>
   </div>
+
+  <div class="modal fade" id="changePasswordModal" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h4 class="modal-title" id="changePasswordModalHeading"></h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <form class="form-horizontal" method="POST" action="{{ route('adminChangePassword') }}"
+                      id="changePassworduserForm">
+                      @csrf
+                      <input type="hidden" name="employee_id" id="employee_id" value="{{ Auth::user()->id }}">
+
+                      <div class="container">
+                          <div class="form-group row">
+                              <label class="col-sm-4 col-form-label text-osave">Old Password*</label>
+                              <div class="col-sm-8">
+                                  <div class="input-group">
+                                      <input type="password" class="form-control" id="password"
+                                          placeholder="Enter current password" name="oldpassword">
+                                      <div class="input-group-append">
+                                          <span class="input-group-text toggle-password text-dark"><i
+                                                  class="fas fa-eye"></i></span>
+                                      </div>
+                                  </div>
+                                  <span class="text-danger error-text oldpassword_error"></span>
+                              </div>
+                          </div>
+
+                          <div class="form-group row">
+                              <label class="col-sm-4 col-form-label text-osave">New Password*</label>
+                              <div class="col-sm-8">
+                                  <div class="input-group">
+                                      <input type="password" class="form-control" id="newpassword"
+                                          placeholder="Enter new password" name="newpassword">
+                                      <div class="input-group-append">
+                                          <span class="input-group-text toggle-password text-dark"><i
+                                                  class="fas fa-eye"></i></span>
+                                      </div>
+                                  </div>
+                                  <span class="text-danger error-text newpassword_error"></span>
+                              </div>
+                          </div>
+
+                          <div class="form-group row">
+                              <label class="col-sm-4 col-form-label text-osave">Confirm
+                                  Password*</label>
+                              <div class="col-sm-8">
+                                  <div class="input-group">
+                                      <div class="input-group">
+                                          <input type="password" class="form-control" id="cnewpassword"
+                                              placeholder="Re-enter new password" name="cnewpassword">
+                                          <div class="input-group-append">
+                                              <span class="input-group-text toggle-password text-dark"><i
+                                                      class="fas fa-eye"></i></span>
+                                          </div>
+                                      </div>
+                                      <span class="text-danger error-text cnewpassword_error"></span>
+                                  </div>
+                              </div>
+                          </div>
+               
+              </div>
+              <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary">Update Password</button>
+              </div>
+            </form>
+          </div>
+      </div>
+  </div>
+</div>

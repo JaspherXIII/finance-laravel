@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\Student;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -14,11 +15,58 @@ use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
-    public function index()
+    public function getUsers(): JsonResponse
     {
+        $users = User::orderBy('id')->get();
+        return response()->json(['data' => $users]);
+    }
+
+    public function index(Request $request)
+    {
+        return view('dashboards.admins.accounts');
+    }
+
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email', 
+            'password' => 'required|min:8', 
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['status' => 0, 'error' => $validator->errors()->toArray()]);
+        }
+
+        User::updateOrCreate(
+            ['id' => $request->user_id],
+            [
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => bcrypt($request->password), 
+            ]
+        );
+
+        return response()->json(['success' => 'User Added Successfully!']);
+    }
 
 
-        return view('dashboards.users.index');
+    public function edit(string $id)
+    {
+        $user = User::find($id);
+        return response()->json($user);
+    }
+
+    public function show(string $id)
+    {
+        $user = User::find($id);
+        return response()->json($user);
+    }
+
+    public function destroy(string $id)
+    {
+        $user = User::find($id)->delete();
+        return response()->json(['success' => 'User Deleted Successfully!']);
     }
 
 

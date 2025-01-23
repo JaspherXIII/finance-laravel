@@ -17,10 +17,7 @@ class AdminController extends Controller
 {   
     public function index(Request $request)
     {
-        $totalEmployees = Employee::count();
-        $totalDepartments = Department::count();
-        $totalJobs = Job::count();
-
+       
         $timezone = 'Asia/Manila';
         $currentTime = new \DateTime('now', new \DateTimeZone($timezone));
         $hour = (int) $currentTime->format('H');
@@ -34,9 +31,6 @@ class AdminController extends Controller
         }
 
         return view('dashboards.admins.index', compact(
-            'totalEmployees',
-            'totalDepartments',
-            'totalJobs',
             'greeting',
         ));
     }
