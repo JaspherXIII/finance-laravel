@@ -32,6 +32,7 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users,email', 
             'password' => 'required|min:8', 
+            'role' => 'required', 
         ]);
 
         if ($validator->fails()) {
@@ -43,6 +44,7 @@ class UserController extends Controller
             [
                 'name' => $request->name,
                 'email' => $request->email,
+                'role' => $request->role,
                 'password' => Hash::make($request->password),
             ]
         );
