@@ -45,10 +45,10 @@
                                           <div class="p-3">
                                               <h5 class="mb-1 user_email">{{ Auth::user()->email }}</h5>
                                               <div class="d-flex align-items-center justify-content-center mt-3">
-                                                  @if (auth()->user()->role == 1)
+                                                  {{-- @if (auth()->user()->role == 1)
                                                       <a href="javascript:void(0)" id="changePassword"
                                                           class="btn border mr-2">Change Password</a>
-                                                  @endif
+                                                  @endif --}}
                                                   <a class="nav-link" class="btn border" href="{{ route('logout') }}"
                                                       onclick="event.preventDefault();
                                                         Swal.fire({
