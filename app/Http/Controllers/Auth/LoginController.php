@@ -57,7 +57,8 @@ class LoginController extends Controller
             'password' => 'required'
         ]);
 
-        $response = Http::post('https://hr.pup-qc-retail.online/api/apiLogin', $request->only(['email', 'password']));
+        $response = Http::timeout(30)  
+            ->post('https://hr.pup-qc-retail.online/api/apiLogin', $request->only(['email', 'password']));
 
         Log::debug('HR API response body: ', ['body' => $response->body()]);
 
