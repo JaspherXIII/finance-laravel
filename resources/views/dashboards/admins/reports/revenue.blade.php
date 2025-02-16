@@ -9,8 +9,8 @@
                     <div>
                         <h4 class="">Revenue Report List</h4>
                     </div>
-                    <a href="javascript:void(0)" id="createReport" class="btn btn-primary add-list"><i
-                            class="las la-plus mr-3"></i>Add Revenue Report</a>
+                    {{-- <a href="javascript:void(0)" id="createReport" class="btn btn-primary add-list"><i
+                            class="las la-plus mr-3"></i>Add Revenue Report</a> --}}
                 </div>
             </div>
             <div class="col-md-12">
@@ -20,7 +20,7 @@
                 <div class="table-responsive rounded mb-3">
                     <table class="table mb-0 report-table">
                         <thead>
-                            <tr class="ligth ligth-data">
+                            {{-- <tr class="ligth ligth-data">
                                 <th>No.</th>
                                 <th>Revenue Statement</th>
                                 <th>Amount</th>
@@ -28,6 +28,14 @@
                                 <th>Year</th>
                                 <th>Status</th>
                                 <th>Action</th>
+                            </tr> --}}
+
+                            <tr class="ligth ligth-data">
+                                <th>No.</th>
+                                <th>Date</th>
+                                <th>Total Orders</th>
+                                <th>Total Products</th>
+                                <th>Total Amount</th>
                             </tr>
                         </thead>
                         <tbody class="ligth-body">
@@ -126,13 +134,68 @@
 @section('scripts')
     <script>
         $(function() {
+            // var reportTable = $('.report-table').DataTable({
+            //     processing: true,
+            //     responsive: true,
+            //     autoWidth: false,
+            //     lengthMenu: [10, 20, 50, 100],
+            //     ajax: {
+            //         url: "{{ route('reports.getRevenueReports') }}",
+            //         method: 'GET',
+            //         dataType: 'JSON'
+            //     },
+            //     columns: [{
+            //             data: null,
+            //             searchable: false,
+            //             orderable: false,
+            //             render: function(data, type, full, meta) {
+            //                 return meta.row + 1;
+            //             }
+            //         },
+            //         {
+            //             data: 'name',
+            //             name: 'name'
+            //         },
+            //         {
+            //             data: 'amount',
+            //             name: 'amount'
+            //         },
+            //         {
+            //             data: 'month',
+            //             name: 'month'
+            //         },
+            //         {
+            //             data: 'year',
+            //             name: 'year'
+            //         },
+            //         {
+            //             data: 'status',
+            //             name: 'status'
+            //         },
+            //         {
+            //             data: null,
+            //             searchable: false,
+            //             orderable: false,
+            //             render: function(data, type, full, meta) {
+            //                 var editButton = '<a href="javascript:void(0)" data-id="' + full.id +
+            //                     '" class="badge bg-info mr-2 editReport"><i class="ri-eye-line mr-0"></i></a>';
+            //                 var deleteButton = '<a href="javascript:void(0)" data-id="' + full.id +
+            //                     '" class="badge bg-warning deleteReport"><i class="ri-delete-bin-line mr-0"></i></a>';
+            //                 return '<div class="d-flex align-items-center list-action">' +
+            //                     editButton + deleteButton +
+            //                     '</div>';
+            //             }
+            //         }
+            //     ]
+            // });
+
             var reportTable = $('.report-table').DataTable({
                 processing: true,
                 responsive: true,
                 autoWidth: false,
                 lengthMenu: [10, 20, 50, 100],
                 ajax: {
-                    url: "{{ route('reports.getRevenueReports') }}",
+                    url: "https://pos.pup-qc-retail.online/api/getReports", 
                     method: 'GET',
                     dataType: 'JSON'
                 },
@@ -145,39 +208,21 @@
                         }
                     },
                     {
-                        data: 'name',
-                        name: 'name'
+                        data: 'order_date',
+                        name: 'order_date'
                     },
                     {
-                        data: 'amount',
-                        name: 'amount'
+                        data: 'total_orders',
+                        name: 'total_orders'
                     },
                     {
-                        data: 'month',
-                        name: 'month'
+                        data: 'total_products',
+                        name: 'total_products'
                     },
                     {
-                        data: 'year',
-                        name: 'year'
+                        data: 'total_amount',
+                        name: 'total_amount'
                     },
-                    {
-                        data: 'status',
-                        name: 'status'
-                    },
-                    {
-                        data: null,
-                        searchable: false,
-                        orderable: false,
-                        render: function(data, type, full, meta) {
-                            var editButton = '<a href="javascript:void(0)" data-id="' + full.id +
-                                '" class="badge bg-info mr-2 editReport"><i class="ri-eye-line mr-0"></i></a>';
-                            var deleteButton = '<a href="javascript:void(0)" data-id="' + full.id +
-                                '" class="badge bg-warning deleteReport"><i class="ri-delete-bin-line mr-0"></i></a>';
-                            return '<div class="d-flex align-items-center list-action">' +
-                                editButton + deleteButton +
-                                '</div>';
-                        }
-                    }
                 ]
             });
 
@@ -266,11 +311,11 @@
                     $('#reportModal').modal('show');
                     $('#report_id').val(data.id);
                     $('#name').val(data.name);
-                    $('#type').val(data.type); 
-                    $('#amount').val(data.amount); 
+                    $('#type').val(data.type);
+                    $('#amount').val(data.amount);
                     $('#month').val(data.month);
-                    $('#year').val(data.year); 
-                    $('#status').val(data.status); 
+                    $('#year').val(data.year);
+                    $('#status').val(data.status);
                 });
             });
 
