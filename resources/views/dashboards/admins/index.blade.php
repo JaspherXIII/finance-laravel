@@ -53,15 +53,23 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-        const generateColors = (count) => {
-            const colors = [];
-            for (let i = 0; i < count; i++) {
-                const r = Math.floor(Math.random() * 255);
-                const g = Math.floor(Math.random() * 255);
-                const b = Math.floor(Math.random() * 255);
-                colors.push(`rgba(${r}, ${g}, ${b}, 0.7)`);
-            }
-            return colors;
+        const predefinedColors = [
+            'rgba(255, 99, 132, 0.7)', // Red
+            'rgba(54, 162, 235, 0.7)', // Blue
+            'rgba(255, 206, 86, 0.7)', // Yellow
+            'rgba(75, 192, 192, 0.7)', // Teal
+            'rgba(153, 102, 255, 0.7)', // Purple
+            'rgba(255, 159, 64, 0.7)', // Orange
+            'rgba(46, 204, 113, 0.7)', // Green
+            'rgba(231, 76, 60, 0.7)', // Dark Red
+            'rgba(52, 152, 219, 0.7)', // Light Blue
+            'rgba(155, 89, 182, 0.7)' // Dark Purple
+        ];
+
+        const getConsistentColors = (count) => {
+            return Array.from({
+                length: count
+            }, (_, i) => predefinedColors[i % predefinedColors.length]);
         };
 
         fetch('https://pos.pup-qc-retail.online/api/dailyCompletedOrders')
@@ -115,7 +123,7 @@
             .then(response => response.json())
             .then(data => {
                 const ctx = document.getElementById('monthlySalesChart').getContext('2d');
-                const colors = generateColors(data.labels.length); 
+                const colors = getConsistentColors(data.labels.length);
 
                 new Chart(ctx, {
                     type: 'bar',
@@ -124,9 +132,8 @@
                         datasets: [{
                             label: 'Monthly Sales Orders (in PHP)',
                             data: data.data,
-                            backgroundColor: colors, 
-                            borderColor: colors.map(color => color.replace('0.7',
-                            '1')), 
+                            backgroundColor: colors,
+                            borderColor: colors.map(color => color.replace('0.7', '1')),
                             borderWidth: 1
                         }]
                     },
@@ -160,4 +167,5 @@
             })
             .catch(error => console.error('Error fetching chart data:', error));
     </script>
+
 @endsection
