@@ -195,7 +195,7 @@
                 autoWidth: false,
                 lengthMenu: [10, 20, 50, 100],
                 ajax: {
-                    url: "https://pos.pup-qc-retail.online/api/getReports", 
+                    url: "https://pos.pup-qc-retail.online/api/getReports",
                     method: 'GET',
                     dataType: 'JSON'
                 },
@@ -221,8 +221,12 @@
                     },
                     {
                         data: 'total_amount',
-                        name: 'total_amount'
-                    },
+                        name: 'total_amount',
+                        render: function(data, type, row) {
+                            return parseFloat(data).toFixed(2);
+                        }
+                    }
+
                 ]
             });
 

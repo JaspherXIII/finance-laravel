@@ -221,8 +221,12 @@
                     },
                     {
                         data: 'total_amount',
-                        name: 'total_amount'
-                    },
+                        name: 'total_amount',
+                        render: function(data, type, row) {
+                            return parseFloat(data).toFixed(2);
+                        }
+                    }
+
                 ]
             });
 
