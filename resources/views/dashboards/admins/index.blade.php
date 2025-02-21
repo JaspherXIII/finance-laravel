@@ -21,20 +21,6 @@
                         <div class="header-title">
                             <h4 class="card-title">Monthly Sales Orders</h4>
                         </div>
-                        <div class="card-header-toolbar d-flex align-items-center">
-                            <div class="dropdown">
-                                <span class="dropdown-toggle dropdown-bg btn" id="dropdownMenuButton001"
-                                    data-toggle="dropdown">
-                                    This Month<i class="ri-arrow-down-s-line ml-1"></i>
-                                </span>
-                                <div class="dropdown-menu dropdown-menu-right shadow-none"
-                                    aria-labelledby="dropdownMenuButton001">
-                                    <a class="dropdown-item" href="#">Year</a>
-                                    <a class="dropdown-item" href="#">Month</a>
-                                    <a class="dropdown-item" href="#">Week</a>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     <div class="card-body">
                         <canvas id="monthlySalesChart" width="400" height="200"></canvas>
@@ -47,20 +33,6 @@
                     <div class="card-header d-flex justify-content-between">
                         <div class="header-title">
                             <h4 class="card-title">Daily Completed Orders</h4>
-                        </div>
-                        <div class="card-header-toolbar d-flex align-items-center">
-                            <div class="dropdown">
-                                <span class="dropdown-toggle dropdown-bg btn" id="dropdownMenuButton001"
-                                    data-toggle="dropdown">
-                                    This Month<i class="ri-arrow-down-s-line ml-1"></i>
-                                </span>
-                                <div class="dropdown-menu dropdown-menu-right shadow-none"
-                                    aria-labelledby="dropdownMenuButton001">
-                                    <a class="dropdown-item" href="#">Year</a>
-                                    <a class="dropdown-item" href="#">Month</a>
-                                    <a class="dropdown-item" href="#">Week</a>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class="card-body">
@@ -143,18 +115,18 @@
             .then(response => response.json())
             .then(data => {
                 const ctx = document.getElementById('monthlySalesChart').getContext('2d');
-                const colors = generateColors(data.labels.length); // Generate colors dynamically
+                const colors = generateColors(data.labels.length); 
 
                 new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: data.labels, // E.g., "2025 - January", "2025 - February"
+                        labels: data.labels,
                         datasets: [{
                             label: 'Monthly Sales Orders (in PHP)',
-                            data: data.data, // Sales totals
-                            backgroundColor: colors, // Vibrant bar colors
+                            data: data.data,
+                            backgroundColor: colors, 
                             borderColor: colors.map(color => color.replace('0.7',
-                            '1')), // Full-opacity borders
+                            '1')), 
                             borderWidth: 1
                         }]
                     },
