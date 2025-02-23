@@ -19,7 +19,7 @@
                     <div class="col-lg-4 col-md-4">
                         <div class="card card-block card-stretch card-height">
                             <div class="card-body">
-                                <div class="d-flex align-items-center mb-4 card-total-sale">
+                                <div class="d-flex align-items-center card-total-sale">
                                     <div>
                                         <p class="mb-2">Total Purchase Order</p>
                                         <h4 id="totalOrders">Loading...</h4>
@@ -31,7 +31,7 @@
                     <div class="col-lg-4 col-md-4">
                         <div class="card card-block card-stretch card-height">
                             <div class="card-body">
-                                <div class="d-flex align-items-center mb-4 card-total-sale">
+                                <div class="d-flex align-items-center card-total-sale">
                                     <div>
                                         <p class="mb-2">Total Products Ordered</p>
                                         <h4 id="totalProducts">Loading...</h4>
@@ -43,7 +43,7 @@
                     <div class="col-lg-4 col-md-4">
                         <div class="card card-block card-stretch card-height">
                             <div class="card-body">
-                                <div class="d-flex align-items-center mb-4 card-total-sale">
+                                <div class="d-flex align-items-center card-total-sale">
                                     
                                     <div>
                                         <p class="mb-2">Total Amount</p>
