@@ -132,24 +132,18 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.data) {
-                        document.getElementById("summaryTotalOrders").textContent = data.data.total_orders;
-                        document.getElementById("summaryTotalProducts").textContent = data.data.total_products;
-                        document.getElementById("summaryTotalAmount").textContent =
-                            `₱ ${new Intl.NumberFormat().format(data.data.total_order_amount)}`;
+                        let totalOrders = data.data.total_orders; // Define totalOrders
+                        document.getElementById("summaryTotalOrders").textContent = totalOrders;
 
-                        document.getElementById("summaryHighestOrder").textContent =
-                            `${data.data.highest_order_value.purchase_order_no} - ₱ ${new Intl.NumberFormat().format(data.data.highest_order_value.amount)}`;
-
-                        document.getElementById("summaryLowestOrder").textContent =
-                            `${data.data.lowest_order_value.purchase_order_no} - ₱${new Intl.NumberFormat().format(data.data.lowest_order_value.amount)}`;
+                        let maxOrders = 500;
+                        let ordersPercent = Math.min((totalOrders / maxOrders) * 100, 100);
+                        document.getElementById("progressOrders").style.width = ordersPercent + "%";
                     }
                 })
                 .catch(error => {
                     console.error("Error fetching summary data:", error);
                 });
-        });
 
-        document.addEventListener("DOMContentLoaded", function() {
             fetch("https://pos.pup-qc-retail.online/api/getTotalOrdersSummary")
                 .then(response => response.json())
                 .then(data => {
@@ -170,17 +164,14 @@
                                 minimumFractionDigits: 2
                             });
 
-                        let maxOrders = 500;
                         let maxProducts = 5000;
                         let maxAmount = 100000;
                         let maxAverageRevenue = 5000;
 
-                        let ordersPercent = Math.min((totalOrders / maxOrders) * 100, 100);
                         let productsPercent = Math.min((totalProducts / maxProducts) * 100, 100);
                         let amountPercent = Math.min((totalAmount / maxAmount) * 100, 100);
                         let avgRevenuePercent = Math.min((averageRevenue / maxAverageRevenue) * 100, 100);
 
-                        document.getElementById("progressOrders").style.width = ordersPercent + "%";
                         document.getElementById("progressProducts").style.width = productsPercent + "%";
                         document.getElementById("progressAmount").style.width = amountPercent + "%";
                         document.getElementById("progressAverageRevenue").style.width = avgRevenuePercent + "%";
