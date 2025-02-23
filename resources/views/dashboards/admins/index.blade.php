@@ -19,73 +19,85 @@
                     <div class="col-lg-4 col-md-4">
                         <div class="card card-block card-stretch card-height">
                             <div class="card-body">
-                                <div class="d-flex align-items-center card-total-sale">
+                                <div class="d-flex align-items-center mb-4 card-total-sale">
                                     <div>
                                         <p class="mb-2">Total Purchase Order</p>
                                         <h4 id="totalOrders">Loading...</h4>
                                     </div>
                                 </div>
+                                <div class="iq-progress-bar mt-2">
+                                    <span id="progressOrders" class="bg-info iq-progress progress-1" style="width: 0%;"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
+            
                     <div class="col-lg-4 col-md-4">
                         <div class="card card-block card-stretch card-height">
                             <div class="card-body">
-                                <div class="d-flex align-items-center card-total-sale">
+                                <div class="d-flex align-items-center mb-4 card-total-sale">
                                     <div>
                                         <p class="mb-2">Total Products Ordered</p>
                                         <h4 id="totalProducts">Loading...</h4>
                                     </div>
                                 </div>
+                                <div class="iq-progress-bar mt-2">
+                                    <span id="progressProducts" class="bg-danger iq-progress progress-1" style="width: 0%;"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
+            
                     <div class="col-lg-4 col-md-4">
                         <div class="card card-block card-stretch card-height">
                             <div class="card-body">
-                                <div class="d-flex align-items-center card-total-sale">
-                                    
+                                <div class="d-flex align-items-center mb-4 card-total-sale">
                                     <div>
                                         <p class="mb-2">Total Amount</p>
                                         <h4 id="totalAmount">Loading...</h4>
                                     </div>
+                                </div>
+                                <div class="iq-progress-bar mt-2">
+                                    <span id="progressAmount" class="bg-success iq-progress progress-1" style="width: 0%;"></span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-
-            <div class="col-lg-6">
-                <div class="card card-block card-stretch card-height">
-                    <div class="card-header d-flex justify-content-between">
-                        <div class="header-title">
-                            <h4 class="card-title">Monthly Sales Orders</h4>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <canvas id="monthlySalesChart" width="400" height="200"></canvas>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="card card-block card-stretch card-height">
-                    <div class="card-header d-flex justify-content-between">
-                        <div class="header-title">
-                            <h4 class="card-title">Daily Completed Orders</h4>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <canvas id="dailyOrdersChart"></canvas>
-                    </div>
-                </div>
-            </div>
-
-
-
+            
         </div>
+
+
+        <div class="col-lg-6">
+            <div class="card card-block card-stretch card-height">
+                <div class="card-header d-flex justify-content-between">
+                    <div class="header-title">
+                        <h4 class="card-title">Monthly Sales Orders</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <canvas id="monthlySalesChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card card-block card-stretch card-height">
+                <div class="card-header d-flex justify-content-between">
+                    <div class="header-title">
+                        <h4 class="card-title">Daily Completed Orders</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <canvas id="dailyOrdersChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
     </div>
 
 
@@ -100,15 +112,32 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data && data.data) {
-                        document.getElementById("totalOrders").innerText = data.data.total_orders;
-                        document.getElementById("totalProducts").innerText = data.data.total_products;
-                        document.getElementById("totalAmount").innerText = "Php " + parseFloat(data.data
-                            .total_amount).toLocaleString();
+                        let totalOrders = data.data.total_orders;
+                        let totalProducts = data.data.total_products;
+                        let totalAmount = parseFloat(data.data.total_amount);
+
+                        document.getElementById("totalOrders").innerText = totalOrders;
+                        document.getElementById("totalProducts").innerText = totalProducts;
+                        document.getElementById("totalAmount").innerText = "Php " + totalAmount
+                    .toLocaleString();
+
+                        let maxOrders = 500; 
+                        let maxProducts = 5000; 
+                        let maxAmount = 100000; 
+
+                        let ordersPercent = Math.min((totalOrders / maxOrders) * 100, 100);
+                        let productsPercent = Math.min((totalProducts / maxProducts) * 100, 100);
+                        let amountPercent = Math.min((totalAmount / maxAmount) * 100, 100);
+
+                        document.getElementById("progressOrders").style.width = ordersPercent + "%";
+                        document.getElementById("progressProducts").style.width = productsPercent + "%";
+                        document.getElementById("progressAmount").style.width = amountPercent + "%";
                     }
                 })
                 .catch(error => console.error("Error fetching data:", error));
         });
     </script>
+
 
 
     <script>
