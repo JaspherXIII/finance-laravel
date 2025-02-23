@@ -62,7 +62,7 @@
                                         <td id="summaryTotalProducts">Loading...</td>
                                     </tr>
                                     <tr>
-                                        <th>Total Sales Amount</th>
+                                        <th>Total Order Amount</th>
                                         <td id="summaryTotalAmount">Loading...</td>
                                     </tr>
                                     <tr>
@@ -171,6 +171,29 @@
 
 @section('scripts')
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch("https://logistics.pup-qc-retail.online/api/getTotalOrdersForFinance")
+                .then(response => response.json())
+                .then(data => {
+                    if (data.data) {
+                        document.getElementById("summaryTotalOrders").textContent = data.data.total_orders;
+                        document.getElementById("summaryTotalProducts").textContent = data.data.total_products;
+                        document.getElementById("summaryTotalAmount").textContent = new Intl.NumberFormat()
+                            .format(data.data.total_order_amount);
+
+                        document.getElementById("summaryHighestOrder").textContent =
+                            `${data.data.highest_order_value.purchase_order_no} - ₱${new Intl.NumberFormat().format(data.data.highest_order_value.amount)}`;
+
+                        document.getElementById("summaryLowestOrder").textContent =
+                            `${data.data.lowest_order_value.purchase_order_no} - ₱${new Intl.NumberFormat().format(data.data.lowest_order_value.amount)}`;
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching summary data:", error);
+                });
+        });
+
+
         $(function() {
             // var reportTable = $('.report-table').DataTable({
             //     processing: true,
