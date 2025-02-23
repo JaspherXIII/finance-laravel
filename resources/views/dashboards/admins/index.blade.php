@@ -117,7 +117,7 @@
 
                         document.getElementById("totalOrders").innerText = totalOrders;
                         document.getElementById("totalProducts").innerText = totalProducts;
-                        document.getElementById("totalAmount").innerText = "Php " + totalAmount
+                        document.getElementById("totalAmount").innerText = "₱" + totalAmount + ".00"
                     .toLocaleString();
 
                         let maxOrders = 500; 
