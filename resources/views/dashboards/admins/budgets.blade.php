@@ -157,7 +157,8 @@
                     item.percentage = (item.amount / totalBudget) * 100;
                 });
 
-                $('#totalBudget').text(totalBudget.toFixed(2));
+                $('#totalBudget').text('₱ ' + totalBudget.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+
                 $('#totalPercentage').text('100%');
             }
 
