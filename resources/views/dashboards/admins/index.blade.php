@@ -26,12 +26,13 @@
                                     </div>
                                 </div>
                                 <div class="iq-progress-bar mt-2">
-                                    <span id="progressOrders" class="bg-info iq-progress progress-1" style="width: 0%;"></span>
+                                    <span id="progressOrders" class="bg-info iq-progress progress-1"
+                                        style="width: 0%;"></span>
                                 </div>
                             </div>
                         </div>
                     </div>
-            
+
                     <div class="col-lg-4 col-md-4">
                         <div class="card card-block card-stretch card-height">
                             <div class="card-body">
@@ -42,12 +43,13 @@
                                     </div>
                                 </div>
                                 <div class="iq-progress-bar mt-2">
-                                    <span id="progressProducts" class="bg-danger iq-progress progress-1" style="width: 0%;"></span>
+                                    <span id="progressProducts" class="bg-danger iq-progress progress-1"
+                                        style="width: 0%;"></span>
                                 </div>
                             </div>
                         </div>
                     </div>
-            
+
                     <div class="col-lg-4 col-md-4">
                         <div class="card card-block card-stretch card-height">
                             <div class="card-body">
@@ -58,45 +60,46 @@
                                     </div>
                                 </div>
                                 <div class="iq-progress-bar mt-2">
-                                    <span id="progressAmount" class="bg-success iq-progress progress-1" style="width: 0%;"></span>
+                                    <span id="progressAmount" class="bg-success iq-progress progress-1"
+                                        style="width: 0%;"></span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
 
 
-        <div class="col-lg-6">
-            <div class="card card-block card-stretch card-height">
-                <div class="card-header d-flex justify-content-between">
-                    <div class="header-title">
-                        <h4 class="card-title">Monthly Sales Orders</h4>
+
+            <div class="col-lg-6">
+                <div class="card card-block card-stretch card-height">
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="header-title">
+                            <h4 class="card-title">Monthly Sales Orders</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="monthlySalesChart" width="400" height="200"></canvas>
                     </div>
                 </div>
-                <div class="card-body">
-                    <canvas id="monthlySalesChart" width="400" height="200"></canvas>
-                </div>
             </div>
-        </div>
 
-        <div class="col-lg-6">
-            <div class="card card-block card-stretch card-height">
-                <div class="card-header d-flex justify-content-between">
-                    <div class="header-title">
-                        <h4 class="card-title">Daily Completed Orders</h4>
+            <div class="col-lg-6">
+                <div class="card card-block card-stretch card-height">
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="header-title">
+                            <h4 class="card-title">Daily Completed Orders</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="dailyOrdersChart"></canvas>
                     </div>
                 </div>
-                <div class="card-body">
-                    <canvas id="dailyOrdersChart"></canvas>
-                </div>
             </div>
+
+
+
         </div>
-
-
-
-    </div>
     </div>
 
 
@@ -118,11 +121,11 @@
                         document.getElementById("totalOrders").innerText = totalOrders;
                         document.getElementById("totalProducts").innerText = totalProducts;
                         document.getElementById("totalAmount").innerText = "₱ " + totalAmount + ".00"
-                    .toLocaleString();
+                            .toLocaleString();
 
-                        let maxOrders = 500; 
-                        let maxProducts = 5000; 
-                        let maxAmount = 100000; 
+                        let maxOrders = 500;
+                        let maxProducts = 5000;
+                        let maxAmount = 100000;
 
                         let ordersPercent = Math.min((totalOrders / maxOrders) * 100, 100);
                         let productsPercent = Math.min((totalProducts / maxProducts) * 100, 100);
@@ -210,19 +213,29 @@
             .then(response => response.json())
             .then(data => {
                 const ctx = document.getElementById('monthlySalesChart').getContext('2d');
-                const colors = getConsistentColors(data.labels.length);
+                const colors = ['#36A2EB', '#FF6384']; // Blue for orders, Red for revenue
 
                 new Chart(ctx, {
-                    type: 'bar',
+                    type: 'line',
                     data: {
                         labels: data.labels,
                         datasets: [{
-                            label: 'Monthly Sales Orders (in PHP)',
-                            data: data.data,
-                            backgroundColor: colors,
-                            borderColor: colors.map(color => color.replace('0.7', '1')),
-                            borderWidth: 1
-                        }]
+                                label: 'Total Orders',
+                                data: data.total_orders,
+                                borderColor: colors[0],
+                                backgroundColor: colors[0],
+                                borderWidth: 2,
+                                fill: false
+                            },
+                            {
+                                label: 'Total Revenue (PHP)',
+                                data: data.total_revenue,
+                                borderColor: colors[1],
+                                backgroundColor: colors[1],
+                                borderWidth: 2,
+                                fill: false
+                            }
+                        ]
                     },
                     options: {
                         responsive: true,
@@ -239,7 +252,7 @@
                                 beginAtZero: true,
                                 title: {
                                     display: true,
-                                    text: 'Sales Totals (PHP)'
+                                    text: 'Count / Revenue (PHP)'
                                 }
                             },
                             x: {
