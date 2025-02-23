@@ -24,18 +24,12 @@
                                 <th>No.</th>
                                 <th>Title</th>
                                 <th>Amount</th>
-                                <th>Percentage</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody class="ligth-body">
                         </tbody>
                     </table>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <div class="ttl-amt py-2 px-3 d-flex justify-content-end mt-2">
-                    <h5>Total Budget: <strong>₱0.00</strong></h5>
                 </div>
             </div>
         </div>
@@ -56,7 +50,8 @@
                         <div class="form-group row">
                             <label for="name" class="col-sm-4 col-form-label text-osave">Title*</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" required>
+                                <input type="text" class="form-control" id="name" name="name"
+                                    placeholder="Enter name" required>
                                 <span class="text-danger error-text name_error"></span>
                             </div>
                         </div>
@@ -89,7 +84,16 @@
                 ajax: {
                     url: "{{ route('budgets.getBudgets') }}",
                     method: 'GET',
-                    dataType: 'JSON'
+                    dataType: 'JSON',
+                    dataSrc: function(json) {
+                        $(".ttl-amt").html('<strong>Total Budget: ₱' + json.total_budget
+                        .toLocaleString() + '</strong>');
+                        return json.data.map(function(item) {
+                            item.percentage = ((item.amount / json.total_budget) * 100).toFixed(
+                                2) + "%";
+                            return item;
+                        });
+                    }
                 },
                 columns: [{
                         data: null,
@@ -105,8 +109,13 @@
                     },
                     {
                         data: 'amount',
-                        name: 'amount'
+                        name: 'amount',
+                        render: $.fn.dataTable.render.number(',', '.', 2, '₱')
                     },
+                    {
+                        data: 'percentage',
+                        name: 'percentage'
+                    }, // New Percentage Column
                     {
                         data: null,
                         searchable: false,
@@ -121,7 +130,14 @@
                                 '</div>';
                         }
                     }
-                ]
+                ],
+                footerCallback: function(row, data, start, end, display) {
+                    var api = this.api();
+                    var total = api.column(2, {
+                        page: 'all'
+                    }).data().reduce((a, b) => parseFloat(a) + parseFloat(b), 0);
+                    $(api.column(2).footer()).html('<strong>₱' + total.toLocaleString() + '</strong>');
+                }
             });
 
             $("#createBudget").click(function() {
@@ -209,7 +225,7 @@
                     $('#budgetModal').modal('show');
                     $('#budget_id').val(data.id);
                     $('#name').val(data.name);
-                    $('#amount').val(data.amount); 
+                    $('#amount').val(data.amount);
                 });
             });
         });
