@@ -128,11 +128,12 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            // Fetch Total Purchase Orders
             fetch("https://logistics.pup-qc-retail.online/api/getTotalOrdersForFinance")
                 .then(response => response.json())
                 .then(data => {
-                    if (data.data) {
-                        let totalOrders = data.data.total_orders; // Define totalOrders
+                    if (data && data.data) {
+                        let totalOrders = data.data.total_orders;
                         document.getElementById("summaryTotalOrders").textContent = totalOrders;
 
                         let maxOrders = 500;
@@ -141,25 +142,34 @@
                     }
                 })
                 .catch(error => {
-                    console.error("Error fetching summary data:", error);
+                    console.error("Error fetching summary total orders:", error);
                 });
 
+            // Fetch Total Orders Summary
             fetch("https://pos.pup-qc-retail.online/api/getTotalOrdersSummary")
                 .then(response => response.json())
                 .then(data => {
-                    if (data && data.data) {
-                        let totalOrders = data.data.total_orders;
-                        let totalProducts = data.data.total_products;
-                        let totalAmount = parseFloat(data.data.total_amount);
-                        let averageRevenue = parseFloat(data.data.average_revenue_per_order);
+                    console.log("API Response:", data); // Debugging response
 
-                        document.getElementById("totalOrders").innerText = totalOrders;
-                        document.getElementById("totalProducts").innerText = totalProducts;
-                        document.getElementById("totalAmount").innerText = "₱ " + totalAmount.toLocaleString(
+                    if (data && data.data) {
+                        let totalOrders = data.data.total_orders || 0;
+                        let totalProducts = data.data.total_products || 0;
+                        let totalAmount = parseFloat(data.data.total_amount) || 0;
+                        let averageRevenue = parseFloat(data.data.average_revenue_per_order) || 0;
+
+                        // Debugging: Ensure data is not undefined
+                        console.log("Total Orders:", totalOrders);
+                        console.log("Total Products:", totalProducts);
+                        console.log("Total Amount:", totalAmount);
+                        console.log("Average Revenue:", averageRevenue);
+
+                        document.getElementById("totalOrders").textContent = totalOrders;
+                        document.getElementById("totalProducts").textContent = totalProducts;
+                        document.getElementById("totalAmount").textContent = "₱ " + totalAmount.toLocaleString(
                             "en-PH", {
                                 minimumFractionDigits: 2
                             });
-                        document.getElementById("averageRevenue").innerText = "₱ " + averageRevenue
+                        document.getElementById("averageRevenue").textContent = "₱ " + averageRevenue
                             .toLocaleString("en-PH", {
                                 minimumFractionDigits: 2
                             });
@@ -175,11 +185,16 @@
                         document.getElementById("progressProducts").style.width = productsPercent + "%";
                         document.getElementById("progressAmount").style.width = amountPercent + "%";
                         document.getElementById("progressAverageRevenue").style.width = avgRevenuePercent + "%";
+                    } else {
+                        console.error("Invalid response structure from API:", data);
                     }
                 })
-                .catch(error => console.error("Error fetching data:", error));
+                .catch(error => {
+                    console.error("Error fetching total orders summary:", error);
+                });
         });
     </script>
+
 
 
 
