@@ -52,25 +52,32 @@
                     <div class="tab-pane fade" id="summaryReport">
                         <div class="table-responsive rounded mb-3">
                             <table class="table mb-0 report-table">
-                                <thead>
-                                    <tr class="ligth ligth-data">
-                                        <th>Total Orders</th>
-                                        <th>Total Products Sold</th>
-                                        <th>Total Revenue</th>
-                                        <th>Average Revenue Per Order</th>
-                                    </tr>
-                                </thead>
                                 <tbody class="ligth-body">
                                     <tr>
+                                        <th>Total Purchase Orders</th>
                                         <td id="summaryTotalOrders">Loading...</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Total Products Ordered</th>
                                         <td id="summaryTotalProducts">Loading...</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Total Sales Amount</th>
                                         <td id="summaryTotalAmount">Loading...</td>
-                                        <td id="summaryAvgRevenue">Loading...</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Highest Order Value</th>
+                                        <td id="summaryHighestOrder">Loading...</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Lowest Order Value</th>
+                                        <td id="summaryLowestOrder">Loading...</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
+
                 </div>
             </div>
 
