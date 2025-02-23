@@ -24,7 +24,7 @@
                                         <img src="../assets/images/product/1.png" class="img-fluid" alt="image">
                                     </div>
                                     <div>
-                                        <p class="mb-2">Total Sales</p>
+                                        <p class="mb-2">Total Purchase Order</p>
                                         <h4>Php 27312</h4>
                                     </div>
                                 </div>
@@ -43,7 +43,7 @@
                                         <img src="../assets/images/product/2.png" class="img-fluid" alt="image">
                                     </div>
                                     <div>
-                                        <p class="mb-2">Total Change</p>
+                                        <p class="mb-2">Total Products Ordered </p>
                                         <h4>Php -22549</h4>
                                     </div>
                                 </div>
@@ -62,7 +62,7 @@
                                         <img src="../assets/images/product/3.png" class="img-fluid" alt="image">
                                     </div>
                                     <div>
-                                        <p class="mb-2">Complete Orders</p>
+                                        <p class="mb-2">Total Amount</p>
                                         <h4>12</h4>
                                     </div>
                                 </div>
@@ -74,6 +74,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
             <div class="col-lg-6">
                 <div class="card card-block card-stretch card-height">
