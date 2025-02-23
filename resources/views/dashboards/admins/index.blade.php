@@ -152,18 +152,14 @@
                     console.log("API Response:", data); // Debugging response
 
                     if (data && data.data) {
-                        let totalOrders = data.data.total_orders || 0;
                         let totalProducts = data.data.total_products || 0;
                         let totalAmount = parseFloat(data.data.total_amount) || 0;
                         let averageRevenue = parseFloat(data.data.average_revenue_per_order) || 0;
 
-                        // Debugging: Ensure data is not undefined
-                        console.log("Total Orders:", totalOrders);
                         console.log("Total Products:", totalProducts);
                         console.log("Total Amount:", totalAmount);
                         console.log("Average Revenue:", averageRevenue);
 
-                        document.getElementById("totalOrders").textContent = totalOrders;
                         document.getElementById("totalProducts").textContent = totalProducts;
                         document.getElementById("totalAmount").textContent = "₱ " + totalAmount.toLocaleString(
                             "en-PH", {
