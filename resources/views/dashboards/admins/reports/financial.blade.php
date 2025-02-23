@@ -178,21 +178,20 @@
                     if (data.data) {
                         document.getElementById("summaryTotalOrders").textContent = data.data.total_orders;
                         document.getElementById("summaryTotalProducts").textContent = data.data.total_products;
-                        document.getElementById("summaryTotalAmount").textContent = new Intl.NumberFormat()
-                            .format(data.data.total_order_amount);
+                        document.getElementById("summaryTotalAmount").textContent =
+                            ` ₱${new Intl.NumberFormat().format(data.data.total_order_amount)}`;
 
                         document.getElementById("summaryHighestOrder").textContent =
-                            `${data.data.highest_order_value.purchase_order_no} - ₱${new Intl.NumberFormat().format(data.data.highest_order_value.amount)}`;
+                            `${data.data.highest_order_value.purchase_order_no} - ₱ ${new Intl.NumberFormat().format(data.data.highest_order_value.amount)}`;
 
                         document.getElementById("summaryLowestOrder").textContent =
-                            `${data.data.lowest_order_value.purchase_order_no} - ₱${new Intl.NumberFormat().format(data.data.lowest_order_value.amount)}`;
+                            `${data.data.lowest_order_value.purchase_order_no} - ₱ ${new Intl.NumberFormat().format(data.data.lowest_order_value.amount)}`;
                     }
                 })
                 .catch(error => {
                     console.error("Error fetching summary data:", error);
                 });
         });
-
 
         $(function() {
             // var reportTable = $('.report-table').DataTable({
