@@ -17,30 +17,67 @@
                 <div class="ttl-amt py-2 px-3 d-flex justify-content-end mt-2"></div>
             </div>
             <div class="col-lg-12">
-                <div class="table-responsive rounded mb-3">
-                    <table class="table mb-0 report-table">
-                        <thead>
-                            {{-- <tr class="ligth ligth-data">
-                                <th>No.</th>
-                                <th>Revenue Statement</th>
-                                <th>Amount</th>
-                                <th>Month</th>
-                                <th>Year</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr> --}}
+                <!-- Table Navigation Tabs -->
+                <ul class="nav nav-tabs mb-3" id="reportTabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="allReportsTab" data-toggle="tab" href="#allReports">All Reports</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="summaryTab" data-toggle="tab" href="#summaryReport">Summary</a>
+                    </li>
+                </ul>
 
-                            <tr class="ligth ligth-data">
-                                <th>No.</th>
-                                <th>Date</th>
-                                <th>Total Orders</th>
-                                <th>Total Products</th>
-                                <th>Total Amount</th>
-                            </tr>
-                        </thead>
-                        <tbody class="ligth-body">
-                        </tbody>
-                    </table>
+                <div class="tab-content">
+                    <!-- All Reports Table -->
+                    <div class="tab-pane fade show active" id="allReports">
+                        <div class="table-responsive rounded mb-3">
+                            <table class="table mb-0 report-table">
+                                <thead>
+                                    <tr class="ligth ligth-data">
+                                        <th>No.</th>
+                                        <th>Purchase Order No.</th>
+                                        <th>Date</th>
+                                        <th>Total Products</th>
+                                        <th>Total Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="ligth-body">
+                                    <!-- Data will be populated dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Summary Table -->
+                    <div class="tab-pane fade" id="summaryReport">
+                        <div class="table-responsive rounded mb-3">
+                            <table class="table mb-0 summary-table">
+                                <tbody class="ligth-body">
+                                    <tr>
+                                        <th>Total Purchase Orders</th>
+                                        <td id="summaryTotalOrders">Loading...</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Total Products Ordered</th>
+                                        <td id="summaryTotalProducts">Loading...</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Total Order Amount</th>
+                                        <td id="summaryTotalAmount">Loading...</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Highest Order Value</th>
+                                        <td id="summaryHighestOrder">Loading...</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Lowest Order Value</th>
+                                        <td id="summaryLowestOrder">Loading...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
