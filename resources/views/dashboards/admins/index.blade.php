@@ -16,7 +16,7 @@
             </div>
             <div class="col-lg-12">
                 <div class="row">
-                    <div class="col-lg-4 col-md-4">
+                    <div class="col-lg-4 col-md-3">
                         <div class="card card-block card-stretch card-height">
                             <div class="card-body">
                                 <div class="d-flex align-items-center mb-4 card-total-sale">
@@ -32,7 +32,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-4">
+                    <div class="col-lg-4 col-md-3">
                         <div class="card card-block card-stretch card-height">
                             <div class="card-body">
                                 <div class="d-flex align-items-center mb-4 card-total-sale">
@@ -49,7 +49,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-4 col-md-4">
+                    <div class="col-lg-4 col-md-3">
                         <div class="card card-block card-stretch card-height">
                             <div class="card-body">
                                 <div class="d-flex align-items-center mb-4 card-total-sale">
@@ -66,7 +66,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-4 col-md-4">
+                    <div class="col-lg-4 col-md-3">
                         <div class="card card-block card-stretch card-height">
                             <div class="card-body">
                                 <div class="d-flex align-items-center mb-4 card-total-sale">
