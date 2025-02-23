@@ -24,12 +24,18 @@
                                 <th>No.</th>
                                 <th>Title</th>
                                 <th>Amount</th>
+                                <th>Percentage</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody class="ligth-body">
                         </tbody>
                     </table>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="ttl-amt py-2 px-3 d-flex justify-content-end mt-2">
+                    <h5>Total Budget: <strong>₱0.00</strong></h5>
                 </div>
             </div>
         </div>

@@ -9,9 +9,15 @@ use Illuminate\Support\Facades\Validator;
 
 class BudgetController extends Controller
 {
-    public function getBudgets(): JsonResponse
+    public function getBudgets()
     {
-        $budgets = Budget::orderBy('id')->get();
+        $budgets = Budget::all();
+        $totalBudget = $budgets->sum('amount');
+    
+        $budgets->each(function ($budget) use ($totalBudget) {
+            $budget->percentage = number_format(($budget->amount / $totalBudget) * 100, 2) . '%';
+        });
+    
         return response()->json(['data' => $budgets]);
     }
 
