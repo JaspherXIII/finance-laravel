@@ -116,8 +116,15 @@
                     },
                     {
                         data: 'amount',
-                        name: 'amount'
+                        name: 'amount',
+                        render: function(data, type, row) {
+                            return '₱ ' + parseFloat(data).toLocaleString(undefined, {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2
+                            });
+                        }
                     },
+
                     {
                         data: null,
                         searchable: false,

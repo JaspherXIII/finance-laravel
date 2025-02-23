@@ -223,9 +223,13 @@
                         data: 'total_amount',
                         name: 'total_amount',
                         render: function(data, type, row) {
-                            return parseFloat(data).toFixed(2);
+                            return '₱ ' + parseFloat(data).toLocaleString(undefined, {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2
+                            });
                         }
                     }
+
 
                 ]
             });
