@@ -25,12 +25,11 @@
                                     </div>
                                     <div>
                                         <p class="mb-2">Total Purchase Order</p>
-                                        <h4>Php 27312</h4>
+                                        <h4 id="totalOrders">Loading...</h4>
                                     </div>
                                 </div>
                                 <div class="iq-progress-bar mt-2">
-                                    <span class="bg-info iq-progress progress-1" data-percent="85">
-                                    </span>
+                                    <span class="bg-info iq-progress progress-1" data-percent="85"></span>
                                 </div>
                             </div>
                         </div>
@@ -43,13 +42,12 @@
                                         <img src="../assets/images/product/2.png" class="img-fluid" alt="image">
                                     </div>
                                     <div>
-                                        <p class="mb-2">Total Products Ordered </p>
-                                        <h4>Php -22549</h4>
+                                        <p class="mb-2">Total Products Ordered</p>
+                                        <h4 id="totalProducts">Loading...</h4>
                                     </div>
                                 </div>
                                 <div class="iq-progress-bar mt-2">
-                                    <span class="bg-danger iq-progress progress-1" data-percent="70">
-                                    </span>
+                                    <span class="bg-danger iq-progress progress-1" data-percent="70"></span>
                                 </div>
                             </div>
                         </div>
@@ -63,18 +61,18 @@
                                     </div>
                                     <div>
                                         <p class="mb-2">Total Amount</p>
-                                        <h4>12</h4>
+                                        <h4 id="totalAmount">Loading...</h4>
                                     </div>
                                 </div>
                                 <div class="iq-progress-bar mt-2">
-                                    <span class="bg-success iq-progress progress-1" data-percent="75">
-                                    </span>
+                                    <span class="bg-success iq-progress progress-1" data-percent="75"></span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
 
             <div class="col-lg-6">
                 <div class="card card-block card-stretch card-height">
@@ -112,6 +110,23 @@
 
 @section('scripts')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch("https://pos.pup-qc-retail.online/api/getTotalOrdersSummary")
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.data) {
+                        document.getElementById("totalOrders").innerText = data.data.total_orders;
+                        document.getElementById("totalProducts").innerText = data.data.total_products;
+                        document.getElementById("totalAmount").innerText = "Php " + parseFloat(data.data
+                            .total_amount).toLocaleString();
+                    }
+                })
+                .catch(error => console.error("Error fetching data:", error));
+        });
+    </script>
+
 
     <script>
         const predefinedColors = [
