@@ -32,7 +32,7 @@
                         </tbody>
                         <tfoot>
                             <tr class="ligth ligth-data">
-                                <th colspan="2" class="text-right">Total Budget:</th>
+                                <th colspan="2" >Total Budget:</th>
                                 <th id="totalBudget">0</th>
                                 <th id="totalPercentage">100%</th>
                                 <th></th>
