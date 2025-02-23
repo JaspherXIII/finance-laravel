@@ -21,8 +21,8 @@
                             <div class="card-body">
                                 <div class="d-flex align-items-center mb-4 card-total-sale">
                                     <div>
-                                        <p class="mb-2">Total Orders</p>
-                                        <h4 id="totalOrders">Loading...</h4>
+                                        <p class="mb-2">Total Purchase Orders</p>
+                                        <h4 id="summaryTotalOrders">Loading...</h4>
                                     </div>
                                 </div>
                                 <div class="iq-progress-bar mt-2">
@@ -127,6 +127,28 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch("https://logistics.pup-qc-retail.online/api/getTotalOrdersForFinance")
+                .then(response => response.json())
+                .then(data => {
+                    if (data.data) {
+                        document.getElementById("summaryTotalOrders").textContent = data.data.total_orders;
+                        document.getElementById("summaryTotalProducts").textContent = data.data.total_products;
+                        document.getElementById("summaryTotalAmount").textContent =
+                            `₱ ${new Intl.NumberFormat().format(data.data.total_order_amount)}`;
+
+                        document.getElementById("summaryHighestOrder").textContent =
+                            `${data.data.highest_order_value.purchase_order_no} - ₱ ${new Intl.NumberFormat().format(data.data.highest_order_value.amount)}`;
+
+                        document.getElementById("summaryLowestOrder").textContent =
+                            `${data.data.lowest_order_value.purchase_order_no} - ₱${new Intl.NumberFormat().format(data.data.lowest_order_value.amount)}`;
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching summary data:", error);
+                });
+        });
+
         document.addEventListener("DOMContentLoaded", function() {
             fetch("https://pos.pup-qc-retail.online/api/getTotalOrdersSummary")
                 .then(response => response.json())
