@@ -151,14 +151,17 @@
                         let maxOrders = 500;
                         let maxProducts = 5000;
                         let maxAmount = 100000;
+                        let maxAverageRevenue = 5000;
 
                         let ordersPercent = Math.min((totalOrders / maxOrders) * 100, 100);
                         let productsPercent = Math.min((totalProducts / maxProducts) * 100, 100);
                         let amountPercent = Math.min((totalAmount / maxAmount) * 100, 100);
+                        let avgRevenuePercent = Math.min((averageRevenue / maxAverageRevenue) * 100, 100);
 
                         document.getElementById("progressOrders").style.width = ordersPercent + "%";
                         document.getElementById("progressProducts").style.width = productsPercent + "%";
                         document.getElementById("progressAmount").style.width = amountPercent + "%";
+                        document.getElementById("progressAverageRevenue").style.width = avgRevenuePercent + "%";
                     }
                 })
                 .catch(error => console.error("Error fetching data:", error));
