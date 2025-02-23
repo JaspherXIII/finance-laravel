@@ -51,7 +51,7 @@
                     <!-- Summary Table -->
                     <div class="tab-pane fade" id="summaryReport">
                         <div class="table-responsive rounded mb-3">
-                            <table class="table mb-0 report-table">
+                            <table class="table mb-0 summary-table">
                                 <tbody class="ligth-body">
                                     <tr>
                                         <th>Total Purchase Orders</th>
