@@ -75,7 +75,7 @@
                 <div class="card card-block card-stretch card-height">
                     <div class="card-header d-flex justify-content-between">
                         <div class="header-title">
-                            <h4 class="card-title">Monthly Sales Orders</h4>
+                            <h4 class="card-title">Total Sales</h4>
                         </div>
                     </div>
                     <div class="card-body">
@@ -213,7 +213,7 @@
             .then(response => response.json())
             .then(data => {
                 const ctx = document.getElementById('monthlySalesChart').getContext('2d');
-                const colors = ['#36A2EB', '#FF6384']; // Blue for orders, Red for revenue
+                const colors = ['#36A2EB', '#FF6384']; 
 
                 new Chart(ctx, {
                     type: 'line',
