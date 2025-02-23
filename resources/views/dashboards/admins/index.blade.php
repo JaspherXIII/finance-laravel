@@ -5,7 +5,7 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-4">
+            <div class="col-lg-12">
                 <div class="card card-transparent card-block card-stretch card-height border-none">
                     <div class="card-body p-0 mt-lg-2 mt-0">
                         <h3 class="mb-3">Hi {{ Auth::user()->name }}, {{ $greeting }}! </h3>
@@ -14,14 +14,14 @@
 
                 </div>
             </div>
-            <div class="col-lg-8">
+            <div class="col-lg-12">
                 <div class="row">
                     <div class="col-lg-4 col-md-4">
                         <div class="card card-block card-stretch card-height">
                             <div class="card-body">
                                 <div class="d-flex align-items-center mb-4 card-total-sale">
                                     <div>
-                                        <p class="mb-2">Total Purchase Order</p>
+                                        <p class="mb-2">Total Orders</p>
                                         <h4 id="totalOrders">Loading...</h4>
                                     </div>
                                 </div>
@@ -32,13 +32,12 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="col-lg-4 col-md-4">
                         <div class="card card-block card-stretch card-height">
                             <div class="card-body">
                                 <div class="d-flex align-items-center mb-4 card-total-sale">
                                     <div>
-                                        <p class="mb-2">Total Products Ordered</p>
+                                        <p class="mb-2">Total Products Sold</p>
                                         <h4 id="totalProducts">Loading...</h4>
                                     </div>
                                 </div>
@@ -55,7 +54,7 @@
                             <div class="card-body">
                                 <div class="d-flex align-items-center mb-4 card-total-sale">
                                     <div>
-                                        <p class="mb-2">Total Amount</p>
+                                        <p class="mb-2">Total Revenue</p>
                                         <h4 id="totalAmount">Loading...</h4>
                                     </div>
                                 </div>
@@ -66,6 +65,25 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-lg-4 col-md-4">
+                        <div class="card card-block card-stretch card-height">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-4 card-total-sale">
+                                    <div>
+                                        <p class="mb-2">Average Revenue Per Order</p>
+                                        <h4 id="averageRevenue">Loading...</h4>
+                                    </div>
+                                </div>
+                                <div class="iq-progress-bar mt-2">
+                                    <span id="progressAverageRevenue" class="bg-warning iq-progress progress-1"
+                                        style="width: 0%;"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
 
@@ -117,11 +135,18 @@
                         let totalOrders = data.data.total_orders;
                         let totalProducts = data.data.total_products;
                         let totalAmount = parseFloat(data.data.total_amount);
+                        let averageRevenue = parseFloat(data.data.average_revenue_per_order);
 
                         document.getElementById("totalOrders").innerText = totalOrders;
                         document.getElementById("totalProducts").innerText = totalProducts;
-                        document.getElementById("totalAmount").innerText = "₱ " + totalAmount + ".00"
-                            .toLocaleString();
+                        document.getElementById("totalAmount").innerText = "₱ " + totalAmount.toLocaleString(
+                            "en-PH", {
+                                minimumFractionDigits: 2
+                            });
+                        document.getElementById("averageRevenue").innerText = "₱ " + averageRevenue
+                            .toLocaleString("en-PH", {
+                                minimumFractionDigits: 2
+                            });
 
                         let maxOrders = 500;
                         let maxProducts = 5000;
@@ -213,7 +238,7 @@
             .then(response => response.json())
             .then(data => {
                 const ctx = document.getElementById('monthlySalesChart').getContext('2d');
-                const colors = ['#36A2EB', '#FF6384']; 
+                const colors = ['#36A2EB', '#FF6384'];
 
                 new Chart(ctx, {
                     type: 'line',
