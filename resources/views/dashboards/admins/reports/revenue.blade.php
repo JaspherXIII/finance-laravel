@@ -54,25 +54,22 @@
                             <table class="table mb-0 summary-table">
                                 <tbody class="ligth-body">
                                     <tr>
-                                        <th>Total Purchase Orders</th>
-                                        <td id="summaryTotalOrders">Loading...</td>
+                                        <th>Total Orders</th>
+                                        <td id="totalOrders">Loading...</td>
                                     </tr>
                                     <tr>
-                                        <th>Total Products Ordered</th>
-                                        <td id="summaryTotalProducts">Loading...</td>
+                                        <th>Total Products Sold</th>
+                                        <td id="totalProducts">Loading...</td>
                                     </tr>
                                     <tr>
-                                        <th>Total Order Amount</th>
-                                        <td id="summaryTotalAmount">Loading...</td>
+                                        <th>Total Revenue</th>
+                                        <td id="totalAmount">Loading...</td>
                                     </tr>
                                     <tr>
-                                        <th>Highest Order Value</th>
-                                        <td id="summaryHighestOrder">Loading...</td>
+                                        <th>Average Revenue per Order</th>
+                                        <td id="averageRevenue">Loading...</td>
                                     </tr>
                                     <tr>
-                                        <th>Lowest Order Value</th>
-                                        <td id="summaryLowestOrder">Loading...</td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -170,6 +167,31 @@
 
 @section('scripts')
     <script>
+
+document.addEventListener("DOMContentLoaded", function() {
+            fetch("https://pos.pup-qc-retail.online/api/getTotalOrdersSummary")
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.data) {
+                        let totalOrders = data.data.total_orders;
+                        let totalProducts = data.data.total_products;
+                        let totalAmount = parseFloat(data.data.total_amount);
+                        let averageRevenue = parseFloat(data.data.average_revenue_per_order);
+
+                        document.getElementById("totalOrders").innerText = totalOrders;
+                        document.getElementById("totalProducts").innerText = totalProducts;
+                        document.getElementById("totalAmount").innerText = "₱ " + totalAmount.toLocaleString(
+                            "en-PH", {
+                                minimumFractionDigits: 2
+                            });
+                        document.getElementById("averageRevenue").innerText = "₱ " + averageRevenue
+                            .toLocaleString("en-PH", {
+                                minimumFractionDigits: 2
+                            });
+                    }
+                })
+                .catch(error => console.error("Error fetching data:", error));
+        });
         $(function() {
             // var reportTable = $('.report-table').DataTable({
             //     processing: true,
