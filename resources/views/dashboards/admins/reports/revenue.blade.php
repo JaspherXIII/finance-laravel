@@ -197,7 +197,33 @@
                 ajax: {
                     url: "https://pos.pup-qc-retail.online/api/getReports",
                     method: 'GET',
-                    dataType: 'JSON'
+                    dataType: 'JSON',
+                    dataSrc: function(json) {
+                        // Calculate total budget
+                        let totalBudget = json.data.reduce((sum, row) => sum + parseFloat(row
+                            .total_amount), 0);
+
+                        // Append total row
+                        $('.report-table tfoot')
+                    .remove(); // Remove previous tfoot to prevent duplication
+                        $('.report-table').append(`
+                <tfoot>
+                    <tr>
+                        <th colspan="4" class="text-right">Total Budget:</th>
+                        <th>${totalBudget.toFixed(2)}</th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            `);
+
+                        // Add Percentage to each row
+                        json.data.forEach(row => {
+                            row.percentage = ((row.total_amount / totalBudget) * 100).toFixed(
+                                2) + "%";
+                        });
+
+                        return json.data;
+                    }
                 },
                 columns: [{
                         data: null,
@@ -225,10 +251,17 @@
                         render: function(data, type, row) {
                             return parseFloat(data).toFixed(2);
                         }
+                    },
+                    {
+                        data: 'percentage',
+                        name: 'percentage',
+                        render: function(data, type, row) {
+                            return data || "0.00%";
+                        }
                     }
-
                 ]
             });
+
 
             $("#createReport").click(function() {
                 $('#report_id').val('');
