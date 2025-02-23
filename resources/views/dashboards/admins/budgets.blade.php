@@ -24,11 +24,20 @@
                                 <th>No.</th>
                                 <th>Title</th>
                                 <th>Amount</th>
+                                <th>Percentage</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody class="ligth-body">
                         </tbody>
+                        <tfoot>
+                            <tr class="ligth ligth-data">
+                                <th colspan="2" class="text-right">Total Budget:</th>
+                                <th id="totalBudget">0</th>
+                                <th id="totalPercentage">100%</th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>
@@ -80,19 +89,16 @@
                 processing: true,
                 responsive: true,
                 autoWidth: false,
-                lengthMenu: [10, 20, 50, 100],
+                paging: false, // Disable pagination
+                searching: false, // Disable search if unnecessary
+                info: false, // Remove info text
                 ajax: {
                     url: "{{ route('budgets.getBudgets') }}",
                     method: 'GET',
                     dataType: 'JSON',
                     dataSrc: function(json) {
-                        $(".ttl-amt").html('<strong>Total Budget: ₱' + json.total_budget
-                        .toLocaleString() + '</strong>');
-                        return json.data.map(function(item) {
-                            item.percentage = ((item.amount / json.total_budget) * 100).toFixed(
-                                2) + "%";
-                            return item;
-                        });
+                        updateTotals(json.data);
+                        return json.data;
                     }
                 },
                 columns: [{
@@ -109,13 +115,16 @@
                     },
                     {
                         data: 'amount',
-                        name: 'amount',
-                        render: $.fn.dataTable.render.number(',', '.', 2, '₱')
+                        name: 'amount'
                     },
                     {
-                        data: 'percentage',
-                        name: 'percentage'
-                    }, // New Percentage Column
+                        data: null,
+                        searchable: false,
+                        orderable: false,
+                        render: function(data, type, full, meta) {
+                            return `<span class="percentage">${full.percentage.toFixed(2)}%</span>`;
+                        }
+                    },
                     {
                         data: null,
                         searchable: false,
@@ -130,15 +139,19 @@
                                 '</div>';
                         }
                     }
-                ],
-                footerCallback: function(row, data, start, end, display) {
-                    var api = this.api();
-                    var total = api.column(2, {
-                        page: 'all'
-                    }).data().reduce((a, b) => parseFloat(a) + parseFloat(b), 0);
-                    $(api.column(2).footer()).html('<strong>₱' + total.toLocaleString() + '</strong>');
-                }
+                ]
             });
+
+            function updateTotals(data) {
+                let totalBudget = data.reduce((sum, item) => sum + parseFloat(item.amount), 0);
+
+                data.forEach((item) => {
+                    item.percentage = (item.amount / totalBudget) * 100;
+                });
+
+                $('#totalBudget').text(totalBudget.toFixed(2));
+                $('#totalPercentage').text('100%');
+            }
 
             $("#createBudget").click(function() {
                 $('#budget_id').val('');
