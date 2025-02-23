@@ -189,15 +189,24 @@
                             },
                             {
                                 data: 'gross_salary',
-                                name: 'gross_salary'
+                                name: 'gross_salary',
+                                render: function(data, type, row) {
+                                    return '₱ ' + parseFloat(data).toLocaleString();
+                                }
                             },
                             {
                                 data: 'total_deductions',
-                                name: 'total_deductions'
+                                name: 'total_deductions',
+                                render: function(data, type, row) {
+                                    return '₱ ' + parseFloat(data).toLocaleString();
+                                }
                             },
                             {
                                 data: 'net_salary',
-                                name: 'net_salary'
+                                name: 'net_salary',
+                                render: function(data, type, row) {
+                                    return '₱ ' + parseFloat(data).toLocaleString();
+                                }
                             }
                         ]
                     });
@@ -216,7 +225,8 @@
                     confirmButtonText: 'Yes, approve it!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        var url = "https://hr.pup-qc-retail.online/api/payrolls/approve/" + payrollId;
+                        var url = "https://hr.pup-qc-retail.online/api/payrolls/approve/" +
+                            payrollId;
                         $.ajax({
                             url: url,
                             type: "POST",
@@ -245,7 +255,8 @@
                     confirmButtonText: 'Yes, reject it!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        var url = "https://hr.pup-qc-retail.online/api/payrolls/reject/" + payrollId;
+                        var url = "https://hr.pup-qc-retail.online/api/payrolls/reject/" +
+                        payrollId;
                         $.ajax({
                             url: url,
                             type: "POST",
