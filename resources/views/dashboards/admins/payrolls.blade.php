@@ -109,7 +109,7 @@
                 autoWidth: false,
                 lengthMenu: [10, 20, 50, 100],
                 ajax: {
-                    url: "https://hr.pup-qc-retail.online/api/getPayrolls",
+                    url: "https://osave.cloud/api/getPayrolls",
                     method: 'GET',
                     dataType: 'JSON'
                 },
