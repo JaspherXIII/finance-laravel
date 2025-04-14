@@ -109,7 +109,7 @@
                 autoWidth: false,
                 lengthMenu: [10, 20, 50, 100],
                 ajax: {
-                    url: "https://hr.pup-qc-retail.online/api/getPayrolls",
+                    url: "https://osave.cloud/api/getPayrolls",
                     method: 'GET',
                     dataType: 'JSON'
                 },
@@ -164,7 +164,7 @@
             $('body').on('click', '.viewPayroll', function() {
                 var employee_id = $(this).data("id");
 
-                $.get("https://hr.pup-qc-retail.online/api/payrolls" + "/" + employee_id, function(data) {
+                $.get("https://osave.cloud/api/payrolls" + "/" + employee_id, function(data) {
                     $('#viewPayroll').modal('show');
                     $('#pname').text(data.name);
 
@@ -225,7 +225,7 @@
                     confirmButtonText: 'Yes, approve it!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        var url = "https://hr.pup-qc-retail.online/api/payrolls/approve/" +
+                        var url = "https://osave.cloud/api/payrolls/approve/" +
                             payrollId;
                         $.ajax({
                             url: url,
@@ -255,7 +255,7 @@
                     confirmButtonText: 'Yes, reject it!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        var url = "https://hr.pup-qc-retail.online/api/payrolls/reject/" +
+                        var url = "https://osave.cloud/api/payrolls/reject/" +
                         payrollId;
                         $.ajax({
                             url: url,
