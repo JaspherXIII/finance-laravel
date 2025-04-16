@@ -62,7 +62,7 @@ class LoginController extends Controller
 
         Log::debug('HR API response body: ', ['body' => $response->body()]);
 
-        if ($response->successful()) {
+            if ($response->successful()) {
             $userData = $response->json();
             Log::debug('User data from HR system: ', ['userData' => $userData]);
 
