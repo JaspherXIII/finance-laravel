@@ -58,7 +58,7 @@ class LoginController extends Controller
         ]);
 
         $response = Http::timeout(30)
-            ->post('https://hr.pup-qc-retail.online/api/apiLogin', $request->only(['email', 'password']));
+            ->post('https://osave.cloud/api/apiLogin', $request->only(['email', 'password']));
 
         Log::debug('HR API response body: ', ['body' => $response->body()]);
 
